@@ -7,7 +7,11 @@ from flask_cors import CORS
 from flask import render_template
 
 # --- 初始化 Flask 應用 ---
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="static",
+    static_url_path="/static"
+)
 CORS(app, supports_credentials=True) 
 app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
@@ -30,7 +34,7 @@ game_data = {
             "HOME_3": {"type": "dialogue", "speaker": "媽媽", "text": "小信，你臉色怎麼這麼蒼白？這樣反反覆覆也不是辦法，體重都掉了不少。我們去看醫生好不好？", "next": "HOME_4"},
             "HOME_4": {"type": "dialogue", "speaker": "小信", "text": "可是…我好累，完全沒力氣…", "next": "HOME_5"},
             "HOME_5": { "type": "choice", "speaker": "媽媽", "text": "我知道你很難受。隔壁王阿姨說她有個偏方很有效，說不定…", "choices": [ {"text": "（既然是王阿姨的好意…試試看吧。）", "action": "TRY_REMEDY"}, {"text": "（媽，我怕亂吃會更嚴重，我們還是去看醫生。）", "action": "SEE_DOCTOR"} ] },
-            "REMEDY_1": { "type": "dialogue", "speaker": "旁白", "text": "你喝下了王阿姨給的草藥湯，味道很苦澀。當晚，你的腹痛不但沒有減輕，反而更加劇烈，甚至開始發燒。", "next": "REMEDY_2", "image": "assets/herb_soup.png" },
+            "REMEDY_1": { "type": "dialogue", "speaker": "旁白", "text": "你喝下了王阿姨給的草藥湯，味道很苦澀。當晚，你的腹痛不但沒有減輕，反而更加劇烈，甚至開始發燒。", "next": "REMEDY_2", "image": "/static/assets/herb_soup.png" },
             "REMEDY_2": {"type": "dialogue", "speaker": "媽媽", "text": "（驚慌）怎麼會這樣！都是媽不好，不該讓你亂試偏方！我們現在馬上去掛急診！", "action": "GO_TO_CLINIC_URGENT"}
         }
     },
@@ -79,7 +83,7 @@ game_data = {
             "DAILY_1": {"type": "dialogue", "speaker": "旁白", "text": "出院回家後，你開始了與IBD共存的新生活。你每天按時服藥，並試著遵循護理師的建議。", "next": "DAILY_2"},
             "DAILY_2": {"type": "dialogue", "speaker": "阿誠", "text": "（訊息聲）小信！好點沒？晚上出來吃個麻辣鍋跟炸雞，慶祝你出院啊！", "next": "DAILY_3"},
             "DAILY_3": {"type": "dialogue", "speaker": "小信內心", "text": "（好想吃…但我記得伶娜護理師說過，發作期飲食要特別注意…現在的我，應該吃什麼才對呢？）", "next": "MINIGAME_DIET"},
-            "MINIGAME_DIET": { "type": "minigame", "game_type": "diet_selection", "data": { "prompt": "現在是[b]發炎急性期[/b]，我該選擇哪些「低渣、易消化」的食物呢？ (最多選5樣)", "safe_foods": [ {"name": "白飯", "image": "assets/food_rice.png"}, {"name": "麵條", "image": "assets/food_noodles.png"}, {"name": "魚肉", "image": "assets/food_fish.png"}, {"name": "蒸蛋", "image": "assets/food_steamed_egg.png"} ], "trigger_foods": [ {"name": "炸雞", "image": "assets/food_fried_chicken.png"}, {"name": "麻辣鍋", "image": "assets/food_hot_pot.png"}, {"name": "生菜沙拉", "image": "assets/food_salad.png"}, {"name": "含糖飲料", "image": "assets/food_soda.png"} ] }, "success_node": "DIET_GOOD", "failure_node": "DIET_FAIL" },
+            "MINIGAME_DIET": { "type": "minigame", "game_type": "diet_selection", "data": { "prompt": "現在是[b]發炎急性期[/b]，我該選擇哪些「低渣、易消化」的食物呢？ (最多選5樣)", "safe_foods": [ {"name": "白飯", "image": "/static/assets/food_rice.png"}, {"name": "麵條", "image": "/static/assets/food_noodles.png"}, {"name": "魚肉", "image": "/static/assets/food_fish.png"}, {"name": "蒸蛋", "image": "/static/assets/food_steamed_egg.png"} ], "trigger_foods": [ {"name": "炸雞", "image": "/static/assets/food_fried_chicken.png"}, {"name": "麻辣鍋", "image": "/static/assets/food_hot_pot.png"}, {"name": "生菜沙拉", "image": "/static/assets/food_salad.png"}, {"name": "含糖飲料", "image": "/static/assets/food_soda.png"} ] }, "success_node": "DIET_GOOD", "failure_node": "DIET_FAIL" },
             "DIET_PERFECT": {"type": "dialogue", "speaker": "小信", "text": "（回訊息）「謝啦！但我現在只能吃清淡點的，改天等我狀況更好再約！」你為自己做出正確的選擇感到自豪。", "next": "DAILY_4"},
             "DIET_GOOD": {"type": "dialogue", "speaker": "小信", "text": "（回訊息）「謝啦！但我現在只能吃清淡點的，改天再約！」雖然有點遺憾，但你知道這是正確的決定。", "next": "DAILY_4"},
             "DIET_FAIL": {"type": "dialogue", "speaker": "旁白", "text": "你終究沒能抵擋誘惑，或選錯了食物。當晚，熟悉的腹痛再次來襲…「唉…早知道就該聽護理師的話…」", "next": "DAILY_4"},
@@ -103,8 +107,8 @@ game_data = {
         "nodes": {
             "FINALE_1": {"type": "dialogue", "speaker": "旁白", "text": "又過了幾個月，你的生活因為你的每一個選擇，而走向了不同的樣貌。", "next": "FINALE_CHECK"},
             "FINALE_CHECK": { "type": "event", "action": "FINALE_CHECK" },
-            "GOOD_ENDING": { "type": "dialogue", "speaker": "旁白", "text": "你與病友們一同參加 519 世界IBD日活動，臉上帶著自信的微笑。「雖然這條路很長，但我學會了和它共存。感謝我的家人和醫療團隊，我的人生依然可以很精彩。」", "background": "assets/IBD.png", "is_ending": True },
-            "BAD_ENDING": { "type": "dialogue", "speaker": "旁白", "text": "因為不遵醫囑、聽信偏方或飲食混亂，導致病情反覆發作，你再次躺在冰冷的病床上。「為什麼…為什麼總是好不了…我到底該怎麼辦…」", "background": "assets/SAD.png", "is_ending": True }
+            "GOOD_ENDING": { "type": "dialogue", "speaker": "旁白", "text": "你與病友們一同參加 519 世界IBD日活動，臉上帶著自信的微笑。「雖然這條路很長，但我學會了和它共存。感謝我的家人和醫療團隊，我的人生依然可以很精彩。」", "background": "/static/assets/IBD.png", "is_ending": True },
+            "BAD_ENDING": { "type": "dialogue", "speaker": "旁白", "text": "因為不遵醫囑、聽信偏方或飲食混亂，導致病情反覆發作，你再次躺在冰冷的病床上。「為什麼…為什麼總是好不了…我到底該怎麼辦…」", "background": "/static/assets/SAD.png", "is_ending": True }
         }
     }
 }

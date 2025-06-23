@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div id="game-container">
@@ -35,11 +35,11 @@
             <div id="choice-buttons-container"></div>
             <!-- 【新增】結局動作按鈕的專屬容器 -->
             <div id="ending-actions-container"></div>
-            <img id="dialogue-next" src="assets/right.png" alt="下一步" />
+            <img id="dialogue-next" src="{{ url_for('static', filename='assets/right.png') }}" alt="下一步" />
         </div>
     </div>
     
-    <script src="script.js"></script>
+     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
     <!-- 自助餐小遊戲的 HTML 模板 -->
     <template id="diet-game-template">

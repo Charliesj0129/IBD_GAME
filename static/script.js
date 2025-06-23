@@ -1,23 +1,24 @@
 // --- CONFIGURATION & 資源對應表 ---
 const BACKEND_URL = '';
+const STATIC_ASSETS = '/static/assets/';
 
 const characterImages = {
-  '小信': 'assets/char_xiaoxin.png',
-  '媽媽': 'assets/char_mom.png',
-  '周醫師': 'assets/char_doctor.png',
-  '伶娜護理師': 'assets/char_nurse.png',
-  '阿誠': 'assets/char_friend.png',
+  '小信': STATIC_ASSETS + 'char_xiaoxin.png',
+  '媽媽': STATIC_ASSETS + 'char_mom.png',
+  '周醫師': STATIC_ASSETS + 'char_doctor.png',
+  '伶娜護理師': STATIC_ASSETS + 'char_nurse.png',
+  '阿誠': STATIC_ASSETS + 'char_friend.png',
   '旁白': '',
-  '小信內心': 'assets/char_think.png'
+  '小信內心': STATIC_ASSETS + 'char_think.png'
 };
 
 // --- 【關鍵修正】更新場景與背景圖的對應關係 ---
 const sceneBackgrounds = {
-  'scene_1_home': 'assets/bg_home.png',
-  'scene_2_clinic': 'assets/bg_clinic.png',
-  'scene_3_treatment_plan': 'assets/bg_clinic.png', // 指定場景3繼續使用診所背景
-  'scene_4_daily_life': 'assets/bg_food.png',       // 指定場景4使用食物背景
-  'scene_5_long_term': 'assets/bg_clinic.png'        // 指定場景5回到診所背景
+  'scene_1_home': STATIC_ASSETS + 'bg_home.png',
+  'scene_2_clinic': STATIC_ASSETS + 'bg_clinic.png',
+  'scene_3_treatment_plan': STATIC_ASSETS + 'bg_clinic.png', // 指定場景3繼續使用診所背景
+  'scene_4_daily_life': STATIC_ASSETS + 'bg_food.png',       // 指定場景4使用食物背景
+  'scene_5_long_term': STATIC_ASSETS + 'bg_clinic.png'        // 指定場景5回到診所背景
   // 場景6的結局背景由後端動態提供，此處不需設定
 };
 
@@ -98,7 +99,7 @@ function renderDietMinigame(nodeData) {
         foodEl.dataset.name = foodObject.name;
         foodEl.dataset.isSafe = isSafe;
         const imgEl = document.createElement('img');
-        imgEl.src = foodObject.image;
+        imgEl.src = STATIC_ASSETS + foodObject.image.split('/').pop();
         imgEl.alt = foodObject.name;
         imgEl.onerror = () => { imgEl.style.display = 'none'; foodEl.querySelector('span').textContent += ' (圖片遺失)'; console.error(`Failed to load image: ${foodObject.image}`); };
         foodEl.appendChild(imgEl);
