@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBD Story Game</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 圖層 1: 狀態欄 -->
+        <div id="status-container"></div>
+        
+        <!-- 圖層 2: 背景 -->
+        <div id="background-layer"></div>
+
+        <!-- 圖層 3: 人物立繪 -->
+        <img id="character-sprite" src="" alt="Character">
+        
+        <!-- 圖層 4: 事件圖片 (如草藥湯) -->
+        <img id="event-image" src="" alt="Event Image" class="hidden">
+        
+        <!-- 圖層 5: 小遊戲專用容器 -->
+        <div id="minigame-container" class="hidden"></div>
+        
+        <!-- 圖層 6: 對話框容器 -->
+        <div id="dialogue-container" class="hidden">
+            <div id="speaker-name"></div>
+            <div id="dialogue-text"></div>
+            <div id="choice-buttons-container"></div>
+            <!-- 【新增】結局動作按鈕的專屬容器 -->
+            <div id="ending-actions-container"></div>
+            <img id="dialogue-next" src="assets/right.png" alt="下一步" />
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+
+    <!-- 自助餐小遊戲的 HTML 模板 -->
+    <template id="diet-game-template">
+        <h2 class="minigame-question" id="diet-game-prompt"></h2>
+        <div id="diet-game-timer">剩餘時間：<span id="timer-display">30</span> 秒</div>
+        <div id="diet-game-layout">
+            <div id="buffet-area-container">
+                <h3>自助餐檯 (請將安全食物拖到右邊)</h3>
+                <div id="buffet-area"></div>
+            </div>
+            <div id="plate-area-container">
+                <h3>我的餐盤</h3>
+                <div id="plate-area"></div>
+            </div>
+        </div>
+        <button id="submit-diet-button">我選好了！</button>
+    </template>
+</body>
+</html>
